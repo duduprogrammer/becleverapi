@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Empleos</title>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de empleados</h1>
+        <a th:href="@{'/registers/promedios/'}" class="btn btn-success btn-sm">Promedios</a>
+        <a th:href="@{'/registers/search'}" class="btn btn-success info-sm">Buscar</a>
+      
+        <a th:href="@{'/registers/add'}" class="btn btn-primary info-sm">Agregar</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID Empleado</th>
+                    <th>ID Sucursal</th>
+                    <th>Nombre</th>
+                    <th>Genero</th>
+                    <th>Tipo de Registro</th>
+                    <th>Sucursal</th>
+                    <th>Fecha Registro</th>
+                    <th>ACCIONES</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+				
+                <tr th:each="empleado : ${empleado}">
+                    <td th:text="${empleado.idEmployee}"></td>
+                    <td th:text="${empleado.getBranch().getId()}"></td>
+                   
+                    <td th:text="${empleado.descriptionFilter}"></td>
+                    <td th:text="${empleado.gender}"></td>
+                    <td th:text="${empleado.registerType}"></td>
+                    <td th:text="${empleado.getBranch().getNombre()}"></td>
+            	    <td th:text="${empleado.date}"></td>
+            	   
+                  
+                    <td>
+						
+						
+						<a th:href="@{'/registers/edit/' + ${empleado.id}}" class="btn btn-warning btn-sm">Editar</a>
+                        <a th:href="@{'/registers/delete/' + ${empleado.id}}" class="btn btn-danger btn-sm">Eliminar</a>
+                        
+                        
+                        
+					</td>
+                    
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

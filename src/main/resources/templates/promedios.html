@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Promedio por sucursal</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+	
+	
+	<div class="accordion" id="accordionExample">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Buscar promedios por Fechas
+        </button>
+      </h2>
+          
+    <form id="date-range-form">
+  <div class="form-group">
+    <label for="start-date">Fecha de inicio:</label>
+    <input type="date" class="form-control" id="start-date" name="startDate">
+  </div>
+  <div class="form-group">
+    <label for="end-date">Fecha de fin:</label>
+    <input type="date" class="form-control" id="end-date" name="endDate">
+  </div>
+  <button type="submit" class="btn btn-primary">Buscar</button>
+</form>
+ <div class="container">
+        <h1>Promedio por sucursal</h1>
+        <table class="table">
+            <thead>
+                <tr>
+     
+                </tr>
+            </thead>
+            <tbody id="results"></tbody>
+        </table>
+    </div>
+    </div>
+     </div>
+      </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+$(document).ready(function() {
+  $('#date-range-form').on('submit', function(event) {
+    // Detener el envío del formulario normal
+    event.preventDefault();
+    
+    // Obtener los valores de los campos de entrada
+    var startDate = $('#start-date').val();
+    var endDate = $('#end-date').val();
+    
+    // Enviar la solicitud AJAX con los valores de los campos de entrada
+    $.ajax({
+      url: 'http://localhost:8080/api/average?',
+      type: 'GET',
+      data: {
+        startDate: startDate,
+        endDate: endDate
+      },
+      success: function(data) {
+        // Mostrar los resultados en la página
+        displayResults(data);
+      }
+    });
+  });
+});
+
+function displayResults(data) {
+    var resultsDiv = $('#results');
+    resultsDiv.empty();
+
+    $.each(data, function(branchName, branchData) {
+        var branchDiv = $('<div>').addClass('branch');
+        var branchHeader = $('<h3>').text(branchName);
+        var branchTable = $('<table>').addClass('table');
+        var branchTableBody = $('<tbody>');
+
+        $.each(branchData, function(key, value) {
+            var row = $('<tr>');
+            row.append($('<td>').text(key));
+            row.append($('<td>').text(value));
+            branchTableBody.append(row);
+        });
+
+        branchTable.append(branchTableBody);
+        branchDiv.append(branchHeader).append(branchTable);
+        resultsDiv.append(branchDiv);
+    });
+}
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

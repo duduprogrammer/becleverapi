@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar Empleado</title>
+    <!-- Importar Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+	
+	 <div class="container">
+        <h1>Buscar Empleado</h1>
+        <form th:action="@{/registers/search}" method="get">
+	  <div class="form-group">
+	    <label for="dateFrom">Fecha desde:</label>
+	    <input type="date" class="form-control" id="dateFrom" name="dateFrom">
+	  </div>
+	  <div class="form-group">
+	    <label for="dateTo">Fecha hasta:</label>
+	    <input type="date" class="form-control" id="dateTo" name="dateTo">
+	  </div>
+	  <div class="form-group">
+	    <label for="descriptionFilter">Nombre o apellido:</label>
+	    <input type="text" class="form-control" id="descriptionFilter" name="descriptionFilter">
+	  </div>
+	  <div class="form-group">
+	    <label for="businessLocation">Sucursal:</label>
+	    <select class="form-control" id="businessLocation" name="businessLocation">
+	      <option value="">Todas las sucursales</option>
+	      <option value="Beclever Argentina">Beclever Argentina</option>
+	      <option value="Beclever España">Beclever España</option>
+	      <option value="Beclever Brasil">Beclever Brasil</option>
+	    </select>
+	  </div>
+	  <button type="submit" class="btn btn-primary">Buscar</button>
+	</form>
+	<!-- Sección de resultados -->
+<div class="container"> <h2>Resultados de la búsqueda:</h2> <table class="table"> <thead> <tr> <th>Fecha</th> <th>Nombre</th> <th>Sucursal</th> <th>Ingreso</th> <th>Egreso</th> </tr> </thead> <tbody> <!-- Ciclo para mostrar los registros encontrados --> <tr th:each="register : ${registers}"> <td th:text="${register.date}"></td> <td th:text="${register.descriptionFilter}"></td> <td th:text="${register.getBranch().getNombre()}"></td> <td th:text="${register.entryCount}"></td> <td th:text="${register.exitCount}"></td> </tr> </tbody> </table> </div>
+    
+    
+
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Importar Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
